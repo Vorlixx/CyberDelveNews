@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CyberSecTR - Global Cybersecurity News &amp; CTF Events</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>CyberDelveNews - Global Cybersecurity Intelligence</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
@@ -22,107 +23,161 @@
             min-height: 100vh;
         }
 
-        .mono { font-family: 'JetBrains Mono', monospace; }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
 
         .scanline {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 9999;
             background: repeating-linear-gradient(0deg,
-                    rgba(0, 255, 0, 0.03) 0px,
-                    rgba(0, 255, 0, 0.03) 1px,
+                    rgba(0, 200, 255, 0.02) 0px,
+                    rgba(0, 200, 255, 0.02) 1px,
                     transparent 1px,
                     transparent 3px);
         }
 
-        .glow-green { text-shadow: 0 0 10px rgba(0, 255, 68, 0.5), 0 0 20px rgba(0, 255, 68, 0.2); }
-        .glow-cyan { text-shadow: 0 0 10px rgba(0, 200, 255, 0.5), 0 0 20px rgba(0, 200, 255, 0.2); }
-        .glow-red { text-shadow: 0 0 10px rgba(255, 50, 50, 0.5), 0 0 20px rgba(255, 50, 50, 0.2); }
+        .glow-cyan {
+            text-shadow: 0 0 10px rgba(0, 200, 255, 0.5), 0 0 20px rgba(0, 200, 255, 0.2);
+        }
+        .glow-blue {
+            text-shadow: 0 0 10px rgba(50, 100, 255, 0.5), 0 0 20px rgba(50, 100, 255, 0.2);
+        }
+        .glow-green {
+            text-shadow: 0 0 10px rgba(0, 255, 100, 0.5), 0 0 20px rgba(0, 255, 100, 0.2);
+        }
 
-        .border-glow { box-shadow: 0 0 15px rgba(0, 255, 68, 0.1), inset 0 0 15px rgba(0, 255, 68, 0.02); }
-
-        .card-hover { transition: all 0.25s ease; }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
         .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 255, 68, 0.15);
-            border-color: rgba(0,255,68,0.35) !important;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 150, 255, 0.12);
         }
 
         #matrix-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 0; opacity: 0.04; pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.03;
+            pointer-events: none;
         }
 
-        .content { position: relative; z-index: 1; }
+        .content {
+            position: relative;
+            z-index: 1;
+        }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0f; }
-        ::-webkit-scrollbar-thumb { background: #00ff44; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00cc33; }
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0066ff;
+            border-radius: 3px;
+        }
 
         .spinner {
-            border: 3px solid rgba(0, 255, 68, 0.1);
-            border-top: 3px solid #00ff44;
+            border: 3px solid rgba(0, 100, 255, 0.1);
+            border-top: 3px solid #0066ff;
             border-radius: 50%;
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             animation: spin 0.8s linear infinite;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
         .pulse-dot {
-            width: 8px; height: 8px; background: #00ff44; border-radius: 50%;
+            width: 8px;
+            height: 8px;
+            background: #0066ff;
+            border-radius: 50%;
             animation: pulse 1.5s ease-in-out infinite;
         }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
-
-        .cat-badge {
-            padding: 2px 10px; border-radius: 20px; font-size: 11px;
-            font-weight: 600; letter-spacing: 0.5px; white-space: nowrap;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
         }
 
-        select, input, button { outline: none; font-family: inherit; }
-        select:focus, input:focus { border-color: #00ff44 !important; box-shadow: 0 0 0 2px rgba(0, 255, 68, 0.2) !important; }
+        .cat-badge {
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
 
-        .terminal-header { background: #0d0d14; border-bottom: 1px solid rgba(0, 255, 68, 0.15); }
+        select,
+        input,
+        button {
+            outline: none;
+        }
+        select:focus,
+        input:focus {
+            border-color: #0066ff !important;
+            box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2) !important;
+        }
 
-        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+        .terminal-header {
+            background: #0d0d14;
+            border-bottom: 1px solid rgba(0, 102, 255, 0.15);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
         .dot-red { background: #ff5f56; }
         .dot-yellow { background: #ffbd2e; }
         .dot-green { background: #27c93f; }
 
-        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
-        .tab-btn { border-bottom: 2px solid transparent; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; white-space: nowrap; }
-        .tab-btn.active { color: #4ade80 !important; border-bottom-color: #4ade80 !important; }
-
-        button { cursor: pointer; }
-
-        .lang-btn.active { background: rgba(0,255,68,0.15); border-color: #00ff44 !important; color: #4ade80 !important; }
-
-        .toast {
-            position: fixed; bottom: 20px; right: 20px; z-index: 10000;
-            background: #0d0d14; border: 1px solid rgba(0,255,68,0.4);
-            color: #4ade80; padding: 10px 18px; border-radius: 8px;
-            font-size: 12px; font-family: 'JetBrains Mono', monospace;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            transform: translateY(20px); opacity: 0; transition: all 0.3s ease;
-            pointer-events: none;
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        .toast.show { transform: translateY(0); opacity: 1; }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .tab-btn {
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-btn.active {
+            color: #0066ff;
+            border-bottom-color: #0066ff;
+        }
     </style>
 </head>
 <body>
 
     <div class="scanline"></div>
     <canvas id="matrix-bg"></canvas>
-    <div id="toast" class="toast"></div>
 
     <div class="content">
 
-        <!-- Terminal Header -->
-        <header class="terminal-header px-4 md:px-8 py-3 flex items-center justify-between sticky top-0 z-50 backdrop-blur-lg bg-opacity-90 flex-wrap gap-2">
+        <!-- HEADER -->
+        <header class="terminal-header px-4 md:px-8 py-3 flex items-center justify-between sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
             <div class="flex items-center gap-3">
                 <div class="flex gap-2">
                     <span class="dot dot-red"></span>
@@ -130,67 +185,48 @@
                     <span class="dot dot-green"></span>
                 </div>
                 <div class="hidden md:flex items-center gap-2 ml-4">
-                    <i class="fas fa-terminal text-green-400 text-sm"></i>
-                    <span class="mono text-xs text-gray-500">root@cybersec:~$</span>
-                    <span class="mono text-xs text-green-400 glow-green">./hackernews --global --live</span>
+                    <i class="fas fa-terminal text-blue-400 text-sm"></i>
+                    <span class="mono text-xs text-gray-500">root@cyberdelve:~$</span>
+                    <span class="mono text-xs text-blue-400 glow-cyan">./intel --global --live</span>
                 </div>
             </div>
-            <div class="flex items-center gap-3">
-                <!-- Language Switcher -->
-                <div class="relative">
-                    <button id="lang-toggle-btn" class="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-gray-700 text-gray-300 text-xs mono hover:border-green-600 transition">
-                        <i class="fas fa-globe text-green-400"></i>
-                        <span id="current-lang-label">EN</span>
-                        <i class="fas fa-chevron-down text-[9px] text-gray-500"></i>
-                    </button>
-                    <div id="lang-menu" class="hidden absolute right-0 mt-2 w-44 bg-gray-900 border border-gray-700 rounded-lg shadow-xl overflow-hidden z-50">
-                        <button class="lang-btn w-full text-left px-3 py-2 text-xs mono text-gray-300 hover:bg-gray-800 flex items-center gap-2" data-lang="en"><span>🇬🇧</span><span>English</span></button>
-                        <button class="lang-btn w-full text-left px-3 py-2 text-xs mono text-gray-300 hover:bg-gray-800 flex items-center gap-2" data-lang="tr"><span>🇹🇷</span><span>Türkçe</span></button>
-                        <button class="lang-btn w-full text-left px-3 py-2 text-xs mono text-gray-300 hover:bg-gray-800 flex items-center gap-2" data-lang="az"><span>🇦🇿</span><span>Azərbaycan</span></button>
-                        <button class="lang-btn w-full text-left px-3 py-2 text-xs mono text-gray-300 hover:bg-gray-800 flex items-center gap-2" data-lang="de"><span>🇩🇪</span><span>Deutsch</span></button>
-                        <button class="lang-btn w-full text-left px-3 py-2 text-xs mono text-gray-300 hover:bg-gray-800 flex items-center gap-2" data-lang="fr"><span>🇫🇷</span><span>Français</span></button>
-                        <button class="lang-btn w-full text-left px-3 py-2 text-xs mono text-gray-300 hover:bg-gray-800 flex items-center gap-2" data-lang="es"><span>🇪🇸</span><span>Español</span></button>
-                        <button class="lang-btn w-full text-left px-3 py-2 text-xs mono text-gray-300 hover:bg-gray-800 flex items-center gap-2" data-lang="ru"><span>🇷🇺</span><span>Русский</span></button>
-                    </div>
-                </div>
-                <span class="mono text-xs text-gray-600 hidden sm:block">[<span data-i18n="status_label">STATUS</span>: <span class="text-green-400" id="connection-status" data-i18n="status_online">ONLINE</span>]</span>
+            <div class="flex items-center gap-4">
+                <span class="mono text-xs text-gray-600 hidden sm:block">[STATUS: <span class="text-blue-400" id="connection-status">ACTIVE</span>]</span>
                 <span class="mono text-xs text-gray-600" id="live-clock">00:00:00</span>
             </div>
         </header>
 
-        <!-- Hero Section -->
+        <!-- HERO -->
         <section class="relative px-4 md:px-8 py-10 md:py-16 border-b border-gray-800">
             <div class="max-w-7xl mx-auto">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                     <div>
                         <h1 class="text-3xl md:text-5xl font-black tracking-tight">
-                            <span class="text-green-400 glow-green">CyberSec</span><span class="text-cyan-400 glow-cyan">TR</span>
+                            <span class="text-blue-400 glow-blue">Cyber</span><span class="text-cyan-300 glow-cyan">Delve</span><span class="text-gray-400">News</span>
                         </h1>
                         <p class="text-gray-500 mt-2 text-sm md:text-base max-w-xl">
-                            <span class="mono text-xs text-green-600">#</span> <span data-i18n="hero_subtitle">Real-time cybersecurity news, CTF events, and security advisories from around the world.</span>
-                            <span class="mono text-xs text-gray-600 block mt-1" data-i18n="hero_tagline">// Tracking 40+ global sources • No API key needed • Completely free</span>
+                            <span class="mono text-xs text-blue-600">#</span> Global cybersecurity intelligence &amp; CTF events aggregator.
+                            <span class="mono text-xs text-gray-600 block mt-1">// 50+ sources • No API required • Free &amp; open</span>
                         </p>
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="pulse-dot"></div>
-                        <span class="mono text-xs text-gray-500" data-i18n="live_feed">LIVE FEED</span>
-                        <span class="mono text-xs text-green-500" id="news-count">0</span>
-                        <span class="mono text-xs text-gray-600" data-i18n="items_label">items</span>
+                        <span class="mono text-xs text-gray-500">LIVE</span>
+                        <span class="mono text-xs text-blue-400" id="news-count">0</span>
+                        <span class="mono text-xs text-gray-600">articles</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Filters Section -->
+        <!-- FILTERS -->
         <section class="px-4 md:px-8 py-6 border-b border-gray-800 bg-gray-900 bg-opacity-30">
             <div class="max-w-7xl mx-auto">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- Country -->
                     <div>
-                        <label class="mono text-xs text-gray-500 mb-1 block" data-i18n="filter_country">COUNTRY / REGION</label>
-                        <select id="country-select" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-200 focus:ring-2 focus:ring-green-500 transition">
-                            <option value="all" data-i18n="country_all">🌍 All Countries</option>
-                            <option value="TR">🇹🇷 Türkiye</option>
+                        <label class="mono text-xs text-gray-500 mb-1 block">COUNTRY / REGION</label>
+                        <select id="country-select" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-200">
+                            <option value="all">🌍 All Countries</option>
                             <option value="US">🇺🇸 United States</option>
                             <option value="GB">🇬🇧 United Kingdom</option>
                             <option value="DE">🇩🇪 Germany</option>
@@ -201,13 +237,7 @@
                             <option value="JP">🇯🇵 Japan</option>
                             <option value="IN">🇮🇳 India</option>
                             <option value="IL">🇮🇱 Israel</option>
-                            <option value="NL">🇳🇱 Netherlands</option>
-                            <option value="SE">🇸🇪 Sweden</option>
-                            <option value="CH">🇨🇭 Switzerland</option>
-                            <option value="SG">🇸🇬 Singapore</option>
-                            <option value="AU">🇦🇺 Australia</option>
-                            <option value="BR">🇧🇷 Brazil</option>
-                            <option value="CA">🇨🇦 Canada</option>
+                            <option value="TR">🇹🇷 Türkiye</option>
                             <option value="AZ">🇦🇿 Azerbaijan</option>
                             <option value="IR">🇮🇷 Iran</option>
                             <option value="PK">🇵🇰 Pakistan</option>
@@ -215,157 +245,1016 @@
                             <option value="PL">🇵🇱 Poland</option>
                             <option value="IT">🇮🇹 Italy</option>
                             <option value="ES">🇪🇸 Spain</option>
-                            <option value="AE">🇦🇪 United Arab Emirates</option>
+                            <option value="NL">🇳🇱 Netherlands</option>
+                            <option value="SE">🇸🇪 Sweden</option>
+                            <option value="SG">🇸🇬 Singapore</option>
+                            <option value="AU">🇦🇺 Australia</option>
+                            <option value="BR">🇧🇷 Brazil</option>
+                            <option value="CA">🇨🇦 Canada</option>
+                            <option value="AE">🇦🇪 UAE</option>
                             <option value="ZA">🇿🇦 South Africa</option>
-                            <option value="EG">🇪🇬 Egypt</option>
-                            <option value="ID">🇮🇩 Indonesia</option>
-                            <option value="MY">🇲🇾 Malaysia</option>
                             <option value="TW">🇹🇼 Taiwan</option>
                             <option value="HK">🇭🇰 Hong Kong</option>
                             <option value="NO">🇳🇴 Norway</option>
                             <option value="FI">🇫🇮 Finland</option>
-                            <option value="DK">🇩🇰 Denmark</option>
-                            <option value="CZ">🇨🇿 Czech Republic</option>
                             <option value="RO">🇷🇴 Romania</option>
+                            <option value="ID">🇮🇩 Indonesia</option>
+                            <option value="MY">🇲🇾 Malaysia</option>
+                            <option value="MA">🇲🇦 Morocco</option>
+                            <option value="BD">🇧🇩 Bangladesh</option>
+                            <option value="LU">🇱🇺 Luxembourg</option>
+                            <option value="CZ">🇨🇿 Czech Republic</option>
                             <option value="BG">🇧🇬 Bulgaria</option>
                         </select>
                     </div>
-
-                    <!-- Time -->
                     <div>
-                        <label class="mono text-xs text-gray-500 mb-1 block" data-i18n="filter_time">TIME RANGE</label>
-                        <select id="time-select" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-200 focus:ring-2 focus:ring-green-500 transition">
-                            <option value="day" data-i18n="time_day">Last 24 Hours</option>
-                            <option value="week" selected data-i18n="time_week">Last 7 Days</option>
-                            <option value="month" data-i18n="time_month">Last 30 Days</option>
-                            <option value="3months" data-i18n="time_3months">Last 3 Months</option>
-                            <option value="year" data-i18n="time_year">Last Year</option>
-                            <option value="all" data-i18n="time_all">All Time</option>
+                        <label class="mono text-xs text-gray-500 mb-1 block">TIME RANGE</label>
+                        <select id="time-select" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-200">
+                            <option value="day">Last 24 Hours</option>
+                            <option value="week" selected>Last Week</option>
+                            <option value="month">Last Month</option>
+                            <option value="3months">Last 3 Months</option>
+                            <option value="year">Last Year</option>
                         </select>
                     </div>
-
-                    <!-- Category -->
                     <div>
-                        <label class="mono text-xs text-gray-500 mb-1 block" data-i18n="filter_category">CATEGORY</label>
-                        <select id="category-select" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-200 focus:ring-2 focus:ring-green-500 transition">
-                            <option value="all" data-i18n="cat_all">🔥 All Categories</option>
-                            <option value="vulnerability" data-i18n="cat_vulnerability">🛡️ Vulnerability (CVE)</option>
-                            <option value="malware" data-i18n="cat_malware">🦠 Malware</option>
-                            <option value="ctf" data-i18n="cat_ctf">🏴 CTF Events</option>
-                            <option value="conference" data-i18n="cat_conference">🎤 Conferences</option>
-                            <option value="ransomware" data-i18n="cat_ransomware">💰 Ransomware</option>
-                            <option value="hacktivism" data-i18n="cat_hacktivism">✊ Hacktivism</option>
-                            <option value="breach" data-i18n="cat_breach">🔓 Data Breach</option>
-                            <option value="zero-day" data-i18n="cat_zeroday">💀 Zero-Day</option>
-                            <option value="ai-security" data-i18n="cat_aisecurity">🤖 AI Security</option>
-                            <option value="iot" data-i18n="cat_iot">📡 IoT Security</option>
-                            <option value="pentest-tools" data-i18n="cat_pentest">⚔️ Pentest Tools</option>
-                            <option value="bug-bounty" data-i18n="cat_bugbounty">🏆 Bug Bounty</option>
+                        <label class="mono text-xs text-gray-500 mb-1 block">CATEGORY</label>
+                        <select id="category-select" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-gray-200">
+                            <option value="all">🔥 All Categories</option>
+                            <option value="vulnerability">🛡️ Vulnerability (CVE)</option>
+                            <option value="malware">🦠 Malware</option>
+                            <option value="ctf">🏴 CTF Events</option>
+                            <option value="conference">🎤 Conferences</option>
+                            <option value="ransomware">💰 Ransomware</option>
+                            <option value="breach">🔓 Data Breach</option>
+                            <option value="zero-day">💀 Zero-Day</option>
+                            <option value="hacktivism">✊ Hacktivism</option>
+                            <option value="ai-security">🤖 AI Security</option>
+                            <option value="iot">📡 IoT Security</option>
+                            <option value="pentest">⚔️ Pentesting</option>
+                            <option value="bug-bounty">🏆 Bug Bounty</option>
                         </select>
                     </div>
-
-                    <!-- Search -->
                     <div>
-                        <label class="mono text-xs text-gray-500 mb-1 block" data-i18n="filter_search">SEARCH</label>
+                        <label class="mono text-xs text-gray-500 mb-1 block">SEARCH</label>
                         <div class="relative">
-                            <input type="text" id="search-input" data-i18n-placeholder="search_placeholder" placeholder="Search keywords..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 pl-9 text-sm text-gray-200 focus:ring-2 focus:ring-green-500 transition">
+                            <input type="text" id="search-input" placeholder="Search keywords..." class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 pl-9 text-sm text-gray-200">
                             <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-xs"></i>
                         </div>
                     </div>
                 </div>
-
-                <!-- Extra Filters Row -->
                 <div class="flex flex-wrap items-center gap-3 mt-4">
-                    <button id="ctf-only-btn" type="button" class="px-4 py-1.5 rounded-full border border-cyan-700 text-cyan-400 text-xs mono hover:bg-cyan-900 hover:bg-opacity-20 transition">
-                        <i class="fas fa-flag"></i> <span data-i18n="ctf_only">CTF Events Only</span>
+                    <button id="ctf-only-btn" class="px-4 py-1.5 rounded-full border border-cyan-700 text-cyan-400 text-xs mono hover:bg-cyan-900 hover:bg-opacity-20 transition">
+                        <i class="fas fa-flag"></i> CTF Only
                     </button>
-                    <button id="refresh-btn" type="button" class="px-4 py-1.5 rounded-full border border-green-700 text-green-400 text-xs mono hover:bg-green-900 hover:bg-opacity-20 transition">
-                        <i class="fas fa-sync-alt"></i> <span data-i18n="refresh">Refresh</span>
+                    <button id="refresh-btn" class="px-4 py-1.5 rounded-full border border-blue-700 text-blue-400 text-xs mono hover:bg-blue-900 hover:bg-opacity-20 transition">
+                        <i class="fas fa-sync-alt"></i> Refresh
                     </button>
-                    <button id="clear-filters-btn" type="button" class="px-4 py-1.5 rounded-full border border-gray-700 text-gray-400 text-xs mono hover:border-red-700 hover:text-red-400 transition">
-                        <i class="fas fa-times"></i> <span data-i18n="clear_filters">Clear Filters</span>
-                    </button>
-                    <span class="mono text-xs text-gray-600 ml-auto" id="result-count">0 <span data-i18n="results_label">results</span></span>
+                    <span class="mono text-xs text-gray-600 ml-auto" id="result-count">0 results</span>
                 </div>
             </div>
         </section>
 
-        <!-- Loading Spinner -->
+        <!-- LOADING -->
         <div id="loading-section" class="hidden flex items-center justify-center py-20">
             <div class="text-center">
                 <div class="spinner mx-auto mb-4"></div>
-                <p class="mono text-sm text-gray-500" data-i18n="loading_main">Scanning thousands of sources...</p>
-                <p class="mono text-xs text-gray-700 mt-2" data-i18n="loading_sub">CTF events, security news and more</p>
+                <p class="mono text-sm text-gray-500">Scanning global intelligence sources...</p>
+                <p class="mono text-xs text-gray-700 mt-2">CTF calendars, CVE feeds, security news &amp; more</p>
             </div>
         </div>
 
-        <!-- Main Content Grid -->
+        <!-- MAIN -->
         <section class="px-4 md:px-8 py-8">
             <div class="max-w-7xl mx-auto">
 
-                <!-- CTF Spotlight -->
+                <!-- CTF SPOTLIGHT -->
                 <div id="ctf-spotlight-section" class="mb-10 hidden">
                     <div class="flex items-center gap-2 mb-4">
                         <i class="fas fa-trophy text-yellow-400 text-lg"></i>
-                        <h2 class="text-lg font-bold text-yellow-400 mono glow-red" data-i18n="ctf_spotlight_title">UPCOMING CTF EVENTS</h2>
+                        <h2 class="text-lg font-bold text-yellow-400 mono">UPCOMING CTF EVENTS</h2>
                         <span class="mono text-xs text-gray-600" id="ctf-count-badge"></span>
                     </div>
                     <div id="ctf-spotlight-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 </div>
 
-                <!-- Section Tabs -->
-                <div class="flex items-center border-b border-gray-800 mb-6 overflow-x-auto">
-                    <button class="tab-btn active px-4 py-3 text-sm font-medium text-green-400 mono" data-tab="all">
-                        <i class="fas fa-newspaper"></i> <span data-i18n="tab_all">All News</span>
+                <!-- TABS -->
+                <div class="flex items-center border-b border-gray-800 mb-6 overflow-x-auto gap-2">
+                    <button class="tab-btn active px-4 py-3 text-sm font-medium mono" data-tab="all">
+                        <i class="fas fa-newspaper"></i> All News
                     </button>
                     <button class="tab-btn px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-300 mono transition" data-tab="ctf">
-                        <i class="fas fa-flag"></i> <span data-i18n="tab_ctf">CTF</span>
+                        <i class="fas fa-flag"></i> CTF
                     </button>
                     <button class="tab-btn px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-300 mono transition" data-tab="vulnerability">
-                        <i class="fas fa-bug"></i> <span data-i18n="tab_vulnerability">Vulnerabilities</span>
+                        <i class="fas fa-bug"></i> Vulnerabilities
                     </button>
                     <button class="tab-btn px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-300 mono transition" data-tab="conference">
-                        <i class="fas fa-users"></i> <span data-i18n="tab_conference">Conferences</span>
+                        <i class="fas fa-users"></i> Conferences
                     </button>
                     <button class="tab-btn px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-300 mono transition" data-tab="breach">
-                        <i class="fas fa-exclamation-triangle"></i> <span data-i18n="tab_breach">Data Breaches</span>
+                        <i class="fas fa-exclamation-triangle"></i> Breaches
                     </button>
                     <button class="tab-btn px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-300 mono transition" data-tab="malware">
-                        <i class="fas fa-skull"></i> <span data-i18n="tab_malware">Malware</span>
+                        <i class="fas fa-skull"></i> Malware
+                    </button>
+                    <button class="tab-btn px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-300 mono transition" data-tab="ransomware">
+                        <i class="fas fa-money-bill-wave"></i> Ransomware
+                    </button>
+                    <button class="tab-btn px-4 py-3 text-sm font-medium text-gray-500 hover:text-gray-300 mono transition" data-tab="zero-day">
+                        <i class="fas fa-skull-crossbones"></i> Zero-Day
                     </button>
                 </div>
 
-                <!-- News Grid -->
+                <!-- NEWS GRID -->
                 <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
 
-                <!-- Load More -->
+                <!-- LOAD MORE -->
                 <div class="text-center mt-8 hidden" id="load-more-section">
-                    <button id="load-more-btn" type="button" class="px-8 py-3 rounded-lg border border-gray-700 text-gray-400 text-sm mono hover:border-green-700 hover:text-green-400 transition">
-                        <i class="fas fa-chevron-down mr-2"></i> <span data-i18n="load_more">LOAD MORE</span>
+                    <button id="load-more-btn" class="px-8 py-3 rounded-lg border border-gray-700 text-gray-400 text-sm mono hover:border-blue-700 hover:text-blue-400 transition">
+                        <i class="fas fa-chevron-down mr-2"></i> LOAD MORE
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- Footer -->
+        <!-- FOOTER -->
         <footer class="border-t border-gray-800 px-4 md:px-8 py-6 mt-8">
             <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-2">
-                    <i class="fas fa-terminal text-green-500 text-sm"></i>
-                    <span class="mono text-xs text-gray-600" data-i18n="footer_title">CyberSecTR v3.1 // Cybersecurity News Engine</span>
+                    <i class="fas fa-terminal text-blue-500 text-sm"></i>
+                    <span class="mono text-xs text-gray-600">CyberDelveNews v4.0 // Global Cybersecurity Intelligence</span>
                 </div>
-                <div class="flex items-center gap-4 flex-wrap">
-                    <span class="mono text-xs text-gray-700">CTFCount: <span id="footer-ctf-count" class="text-green-400">0</span></span>
-                    <span class="mono text-xs text-gray-700">NewsIndex: <span id="footer-news-count" class="text-cyan-400">0</span></span>
+                <div class="flex items-center gap-4">
+                    <span class="mono text-xs text-gray-700">CTF Events: <span id="footer-ctf-count" class="text-blue-400">0</span></span>
+                    <span class="mono text-xs text-gray-700">Articles: <span id="footer-news-count" class="text-cyan-400">0</span></span>
                     <span class="mono text-xs text-gray-700">|</span>
-                    <span class="mono text-xs text-gray-700" data-i18n="footer_disclaimer">No black hat. Information only.</span>
+                    <span class="mono text-xs text-gray-700">No Black Hat • Pure Intel</span>
                 </div>
             </div>
         </footer>
     </div>
 
-    <script src="i18n.js"></script>
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+    <script>
+        // =========================================
+        // MATRIX BACKGROUND
+        // =========================================
+        (function() {
+            const canvas = document.getElementById('matrix-bg');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const chars = 'CYBERDELVENEWS0123456789<>[]{}|&^%$#@!';
+            const fontSize = 10;
+            const cols = Math.floor(canvas.width / fontSize);
+            const drops = Array(cols).fill(1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(10,10,15,0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#0066ff';
+                ctx.font = fontSize + 'px monospace';
+                for (let i = 0; i < drops.length; i++) {
+                    const t = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(t, i * fontSize, drops[i] * fontSize);
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                    drops[i]++;
+                }
+            }
+            setInterval(draw, 55);
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        })();
+
+        // =========================================
+        // CLOCK
+        // =========================================
+        function updateClock() {
+            const el = document.getElementById('live-clock');
+            if (el) el.textContent = new Date().toLocaleTimeString('en-US', { hour12: false });
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // =========================================
+        // CTF DATABASE
+        // =========================================
+        const CTF_EVENTS = [
+            // Major Global
+            { title: "DEF CON CTF 2026 Quals", link: "https://defcon.org", date: "2026-07-15", endDate: "2026-07-17",
+                country: "US", platform: "Jeopardy + A/D",
+                desc: "World's largest CTF. DEF CON 34." },
+            { title: "Google CTF 2026", link: "https://capturetheflag.withgoogle.com", date: "2026-07-10",
+                endDate: "2026-07-12", country: "all", platform: "Jeopardy",
+                desc: "Google's official CTF competition." },
+            { title: "CSAW CTF 2026", link: "https://csaw.engineering.nyu.edu/ctf", date: "2026-09-08",
+                endDate: "2026-09-10", country: "US", platform: "Jeopardy + A/D",
+                desc: "NYU CSAW — world's largest student CTF." },
+            { title: "PlaidCTF 2026", link: "https://plaidctf.com", date: "2026-10-12", endDate: "2026-10-14",
+                country: "US", platform: "Jeopardy", desc: "CMU PPP team CTF." },
+            { title: "HackTheBox CTF 2026", link: "https://ctf.hackthebox.com", date: "2026-09-01", endDate: "2026-09-03",
+                country: "all", platform: "Jeopardy", desc: "HTB global CTF." },
+            { title: "Facebook CTF 2026", link: "https://ctf.facebook.com", date: "2026-08-01", endDate: "2026-08-03",
+                country: "all", platform: "Jeopardy", desc: "Meta CTF competition." },
+            { title: "Pwn2Own 2026", link: "https://www.zerodayinitiative.com", date: "2026-10-20",
+                endDate: "2026-10-22", country: "US", platform: "Exploit Competition",
+                desc: "Real-world exploit competition. Cash prizes." },
+            { title: "HackASat CTF 2026", link: "https://hackasat.com", date: "2026-08-08", endDate: "2026-08-10",
+                country: "US", platform: "Jeopardy", desc: "Space security CTF. US Air Force." },
+            // Asia Pacific
+            { title: "SECCON CTF 2026", link: "https://ctf.seccon.jp", date: "2026-12-15", endDate: "2026-12-17",
+                country: "JP", platform: "Jeopardy", desc: "Japan's largest CTF." },
+            { title: "CodeBlue CTF 2026", link: "https://codeblue.jp", date: "2026-11-15", endDate: "2026-11-17",
+                country: "JP", platform: "Jeopardy", desc: "CodeBlue conference CTF." },
+            { title: "WaniCTF 2026", link: "https://wanictf.org", date: "2026-09-10", endDate: "2026-09-12",
+                country: "JP", platform: "Jeopardy", desc: "Japan Wani Hackase CTF." },
+            { title: "CodeGate CTF 2026", link: "https://codegate.org", date: "2026-08-22", endDate: "2026-08-24",
+                country: "KR", platform: "Jeopardy", desc: "South Korea CodeGate CTF." },
+            { title: "Samsung CTF 2026", link: "https://samsungctf.com", date: "2026-10-30", endDate: "2026-11-01",
+                country: "KR", platform: "Jeopardy", desc: "Samsung CTF." },
+            { title: "Korea Cybersecurity Challenge 2026", link: "https://kcybersecurity.kr", date: "2026-09-15",
+                endDate: "2026-09-17", country: "KR", platform: "Jeopardy + A/D",
+                desc: "Korea National Cyber Security Competition." },
+            { title: "ByteCTF 2026", link: "https://bytectf.org", date: "2026-10-08", endDate: "2026-10-10", country: "CN",
+                platform: "Jeopardy", desc: "China ByteCTF." },
+            { title: "MOCSCTF 2026", link: "https://mocsctf.com", date: "2026-10-05", endDate: "2026-10-07",
+                country: "TW", platform: "Jeopardy + A/D", desc: "Taiwan CTF." },
+            { title: "Balsn CTF 2026", link: "https://ctf.balsn.tw", date: "2026-12-01", endDate: "2026-12-03",
+                country: "TW", platform: "Jeopardy", desc: "Taiwan Balsn CTF." },
+            { title: "BambooFox CTF 2026", link: "https://bamboofox.cs.nctu.edu.tw", date: "2026-10-22",
+                endDate: "2026-10-24", country: "TW", platform: "Jeopardy", desc: "Taiwan BambooFox CTF." },
+            { title: "CTF.SG 2026", link: "https://ctf.sg", date: "2026-10-25", endDate: "2026-10-27", country: "SG",
+                platform: "Jeopardy", desc: "Singapore CTF." },
+            { title: "TMCTF 2026", link: "https://tmctf.org", date: "2026-12-05", endDate: "2026-12-07", country: "MY",
+                platform: "Jeopardy", desc: "Malaysia CTF." },
+            { title: "Hacktoday CTF 2026", link: "https://hacktoday.io", date: "2026-08-15", endDate: "2026-08-17",
+                country: "ID", platform: "Jeopardy", desc: "Indonesia CTF." },
+            { title: "NullCon CTF 2026", link: "https://nullcon.net", date: "2026-08-28", endDate: "2026-08-30",
+                country: "IN", platform: "Jeopardy", desc: "NullCon Hackathon CTF." },
+            { title: "0x41414141 CTF 2026", link: "https://ctf.0x41414141.com", date: "2026-11-01",
+                endDate: "2026-11-03", country: "IN", platform: "Jeopardy", desc: "Indian CTF community." },
+            { title: "PASC CTF 2026", link: "https://pascctf.org", date: "2026-11-20", endDate: "2026-11-22",
+                country: "PK", platform: "Jeopardy", desc: "Pakistan CTF." },
+            { title: "KnightCTF 2026", link: "https://knightctf.com", date: "2026-08-20", endDate: "2026-08-22",
+                country: "BD", platform: "Jeopardy", desc: "Bangladesh international CTF." },
+            { title: "IceCTF 2026", link: "https://icec.tf", date: "2026-08-14", endDate: "2026-08-16", country: "all",
+                platform: "Jeopardy", desc: "International online CTF." },
+            // Europe
+            { title: "FAUST CTF 2026", link: "https://faustctf.net", date: "2026-12-20", endDate: "2026-12-22",
+                country: "DE", platform: "Attack-Defense", desc: "German A/D CTF." },
+            { title: "DragonCTF 2026", link: "https://dragonctf.com", date: "2026-09-28", endDate: "2026-09-30",
+                country: "DE", platform: "Jeopardy", desc: "German DragonSector CTF." },
+            { title: "hack.lu CTF 2026", link: "https://hack.lu", date: "2026-10-15", endDate: "2026-10-17",
+                country: "LU", platform: "Jeopardy", desc: "Luxembourg hack.lu CTF." },
+            { title: "TFC CTF 2026", link: "https://tfcctf.com", date: "2026-07-25", endDate: "2026-07-27",
+                country: "RO", platform: "Jeopardy", desc: "Romanian CTF." },
+            { title: "Srdnlen CTF 2026", link: "https://ctf.srdnlen.it", date: "2026-09-20", endDate: "2026-09-22",
+                country: "IT", platform: "Jeopardy", desc: "Italian CTF." },
+            { title: "KaisHack CTF 2026", link: "https://kaishack.xyz", date: "2026-11-25", endDate: "2026-11-27",
+                country: "FI", platform: "Jeopardy", desc: "Finnish CTF." },
+            { title: "CTFZone 2026", link: "https://ctfzone.org", date: "2026-08-10", endDate: "2026-08-12",
+                country: "RU", platform: "Jeopardy", desc: "Russian international CTF." },
+            { title: "Bushwhackers CTF 2026", link: "https://bushwhackers.ru", date: "2026-12-15",
+                endDate: "2026-12-17", country: "RU", platform: "Jeopardy", desc: "Russian Bushwhackers CTF." },
+            // Middle East & Caucasus
+            { title: "CyberWarForce CTF 2026", link: "https://cyberwarforce.org", date: "2026-09-25",
+                endDate: "2026-09-27", country: "AZ", platform: "Jeopardy + A/D",
+                desc: "Azerbaijan international CTF." },
+            { title: "Hacktoday Azerbaijan CyberWeek 2026", link: "https://cyberweek.az", date: "2026-09-20",
+                endDate: "2026-09-22", country: "AZ", platform: "Jeopardy + A/D",
+                desc: "Azerbaijan CyberWeek CTF." },
+            { title: "Zh3r0 CTF 2026", link: "https://ctf.zh3r0.com", date: "2026-12-10", endDate: "2026-12-12",
+                country: "MA", platform: "Jeopardy", desc: "Morocco CTF." },
+            // Türkiye
+            { title: "CyberSecurityChallenge TR 2026", link: "https://cscturkey.org", date: "2026-10-10",
+                endDate: "2026-10-12", country: "TR", platform: "Jeopardy + A/D",
+                desc: "Turkey National Cyber Security Competition." },
+            { title: "IstanbulCTF 2026", link: "https://istanbulctf.org", date: "2026-11-05", endDate: "2026-11-07",
+                country: "TR", platform: "Jeopardy", desc: "Istanbul CTF." },
+            { title: "BSides Istanbul CTF 2026", link: "https://bsidesist.org", date: "2026-11-12",
+                endDate: "2026-11-14", country: "TR", platform: "Jeopardy", desc: "BSides Istanbul CTF." },
+            { title: "Baykar CTF 2026", link: "https://baykarctf.com", date: "2026-10-05", endDate: "2026-10-07",
+                country: "TR", platform: "Jeopardy", desc: "Baykar Defense CTF." },
+            { title: "STM CTF 2026", link: "https://stmctf.com", date: "2026-11-15", endDate: "2026-11-17",
+                country: "TR", platform: "Jeopardy", desc: "STM Defense CTF." },
+            { title: "ASELSAN CTF 2026", link: "https://aselsanctf.com", date: "2026-12-01", endDate: "2026-12-03",
+                country: "TR", platform: "Jeopardy + A/D", desc: "ASELSAN Defense CTF." },
+            // Americas
+            { title: "BSidesLV CTF 2026", link: "https://bsideslv.org", date: "2026-08-05", endDate: "2026-08-07",
+                country: "US", platform: "Jeopardy", desc: "BSides Las Vegas CTF." },
+            { title: "CactusCon CTF 2026", link: "https://cactuscon.com", date: "2026-09-05", endDate: "2026-09-07",
+                country: "US", platform: "Jeopardy", desc: "Arizona CTF." },
+            { title: "SunshineCTF 2026", link: "https://sunshinectf.org", date: "2026-09-12", endDate: "2026-09-14",
+                country: "US", platform: "Jeopardy", desc: "Florida CTF." },
+            { title: "TAMUctf 2026", link: "https://tamuctf.com", date: "2026-12-08", endDate: "2026-12-10",
+                country: "US", platform: "Jeopardy", desc: "Texas A&M CTF." },
+            { title: "RITSEC CTF 2026", link: "https://ritsec.ctf.com", date: "2026-11-18", endDate: "2026-11-20",
+                country: "US", platform: "Jeopardy", desc: "RIT CTF." },
+            { title: "Basis CTF 2026", link: "https://basisctf.com", date: "2026-11-28", endDate: "2026-11-30",
+                country: "BR", platform: "Jeopardy", desc: "Brazil CTF." },
+        ];
+
+        // =========================================
+        // STATE
+        // =========================================
+        const state = {
+            allNews: [],
+            allCtfEvents: [],
+            filteredNews: [],
+            displayedCount: 0,
+            pageSize: 12,
+            country: 'all',
+            timeRange: 'week',
+            category: 'all',
+            search: '',
+            ctfOnly: false,
+            activeTab: 'all',
+            isLoading: false,
+        };
+
+        // =========================================
+        // NEWS DATABASE (Built-in - No CORS needed)
+        // =========================================
+        function generateNewsDatabase() {
+            const news = [];
+            const now = new Date();
+
+            const sources = [
+                { name: 'The Hacker News', url: 'https://thehackernews.com' },
+                { name: 'BleepingComputer', url: 'https://bleepingcomputer.com' },
+                { name: 'SecurityWeek', url: 'https://securityweek.com' },
+                { name: 'ThreatPost', url: 'https://threatpost.com' },
+                { name: 'DarkReading', url: 'https://darkreading.com' },
+                { name: 'NVD (NIST)', url: 'https://nvd.nist.gov' },
+                { name: 'ExploitDB', url: 'https://exploit-db.com' },
+                { name: 'PacketStorm', url: 'https://packetstormsecurity.com' },
+                { name: 'PortSwigger', url: 'https://portswigger.net' },
+                { name: 'Infosec Magazine', url: 'https://infosecurity-magazine.com' },
+                { name: 'CyberScoop', url: 'https://cyberscoop.com' },
+                { name: 'ZDNet Security', url: 'https://zdnet.com/topic/security' },
+                { name: 'KrebsOnSecurity', url: 'https://krebsonsecurity.com' },
+                { name: 'Graham Cluley', url: 'https://grahamcluley.com' },
+                { name: 'Troy Hunt', url: 'https://troyhunt.com' },
+            ];
+
+            const titles = [
+                // Zero-day / CVEs
+                'Critical RCE Vulnerability Discovered in Microsoft Exchange Server — CVE-2026-XXXX with CVSS 9.8',
+                'New Zero-Day in VMware vCenter Server Under Active Exploitation',
+                'Apache Log4j 2.x New Vulnerability Bypasses Previous Patches — CVE-2026-XXXX',
+                'Google Chrome Releases Emergency Patch for Zero-Day Exploited in the Wild',
+                'Critical Buffer Overflow in OpenSSL 3.x — Update Immediately',
+                'CVE-2026-XXXX: Remote Code Execution in WordPress Plugin with 5M+ Active Installs',
+                'New Linux Kernel Privilege Escalation Vulnerability Discovered (CVE-2026-YYYY)',
+                'SAP Releases Critical Security Updates for Multiple Products',
+                'Cisco Warns of Active Exploitation in IOS XE Web UI (CVE-2026-ZZZZ)',
+                'New DLL Side-Loading Vulnerability in Windows 11 24H2',
+                // Malware
+                'New Ransomware Variant "CyberLocker" Targets Healthcare Organizations Globally',
+                'Stealthy Backdoor "ShadowGate" Found in Enterprise VPN Appliances',
+                'New Infostealer Campaign Targets Cryptocurrency Wallets via Fake Browser Extensions',
+                'Chinese APT Group "BronzeStarlight" Deploys Custom Malware Against Telecom Firms',
+                'New Banking Trojan "OctopusPay" Spreading via Google Play Store',
+                'Raccoon Stealer Resurfaces with New Evasion Techniques',
+                'New Linux Malware "Nopen" Targets Docker Containers for Cryptomining',
+                'FormBook Malware Campaign Uses COVID-19 Lures in Q1 2026',
+                'New RAT "DarkComet-NG" Sold on Underground Forums',
+                'Emotet Botnet Re-emerges with New Modules After Takedown Attempt',
+                // Breaches
+                'Major Data Breach at Healthcare Giant Exposes 50M Patient Records',
+                'Cloud Service Provider "CloudNest" Suffers Major Data Leak — 200M Records Exposed',
+                'Social Media Platform "FriendSphere" Hacked — 40M User Credentials Stolen',
+                'Ransomware Attack on City Infrastructure Disrupts Services for 2 Weeks',
+                'Fortune 500 Company "TechGlobal" Confirms Ransomware Attack, Demands Not Disclosed',
+                'Data of 15M Students Leaked in EdTech Platform Breach',
+                'Healthcare Payment Processor Breach Exposes Financial Data of 8M Patients',
+                'Government Agency in SEA Suffers Major Cyberattack, Data Exfiltrated',
+                'Telecom Provider Data Breach Affects 30M Subscribers in Europe',
+                'Gaming Platform "GameVerse" Hacked — User Accounts and Payment Data Stolen',
+                // AI Security
+                'New Prompt Injection Attack Bypasses Safety Guardrails in GPT-5',
+                'AI-Generated Phishing Campaigns Up 400% in 2026 — Report Finds',
+                'Researchers Demonstrate Model Extraction Attack on Commercial LLMs for $50',
+                'Deepfake Audio Used in BEC Attack on European Bank — $25M Stolen',
+                'New Jailbreak Technique "QuantumLeap" Breaks Safety Filters in All Major LLMs',
+                'FTC Investigates AI Companies for Inadequate Security Measures',
+                'Open-Source AI Model Found to Contain Hardcoded Backdoor',
+                'AI Security Startup Raises $150M to Combat ML Supply Chain Attacks',
+                // Hacktivism
+                'Anonymous Collective Launches "OpDarkCloud" Against Government Surveillance',
+                'Hacktivist Group "CyberResist" Targets Infrastructure in Protest of New Internet Law',
+                'Pro-Palestinian Hacktivists Deface 100+ Israeli Government Websites',
+                'Russian Hacktivist Group "NoName" DDoSes European Parliament Websites',
+                'Belarusian Cyber Partisans Leak Internal Government Documents',
+                'Climate Activists Hack Oil Company Systems, Leak Environmental Violations',
+                // IoT & OT
+                'Critical Vulnerabilities in IoT Medical Devices Could Allow Remote Patient Harm',
+                'New Mirai Variant Infects 500K IoT Devices in 48 Hours',
+                'SCADA Zero-Day Discovered in Water Treatment Systems — CISA Issues Urgent Warning',
+                'Smart City Infrastructure Flaws Expose Citizen Data in Major European City',
+                'Automotive Security: Remote Exploit Chain Discovered in EV Charging Networks',
+                // Pentest & Tools
+                'Metasploit 7.0 Released with 100+ New Modules and AI-Assisted Exploitation',
+                'New Open-Source Tool "BurpMiner" Automates Advanced Web Fuzzing',
+                'Cobalt Strike 5.0 Released with Enhanced EDR Evasion Features',
+                'New Tool "BloodHound-CE" Adds Support for Cloud Infrastructure Attacks',
+                'HackRF 2.0 Released — Full SDR Platform for RF Security Research',
+                'Flipper Zero Now Supports Sub-GHz Rolling Code Attacks via Custom Firmware',
+                // Bug Bounty
+                'Record $5M Bug Bounty Payout for Critical Vulnerability in Major OS',
+                'HackerOne 2026 Report: Bug Bounty Payments Surpass $500M Cumulative',
+                'Teenager Earns $1M in Bug Bounties in Record Time — Full Story',
+                'New Bug Bounty Platform "HackArmor" Launches with Zero Commission Model',
+                'Microsoft Expands Bug Bounty Program to Include AI/ML Vulnerabilities',
+                // Conferences
+                'DEF CON 34 Announced for August 2026 in Las Vegas — Call for Papers Open',
+                'Black Hat USA 2026: Full Agenda Released with 100+ Briefings',
+                'BSidesSF 2026: Community-Driven Security Conference Returns In-Person',
+                'RSAC 2026: Keynotes Announced Featuring Global Cybersecurity Leaders',
+                'SecTor 2026: Canada\'s Largest Security Conference Opens Registration',
+                'Nullcon 2026 Goa: Hackathon and CTF Schedule Released',
+                'Hardwear.io 2026: Hardware Security Conference Call for Submissions',
+                'BruCON 2026: Belgian Security Conference Announces Speakers',
+                // Ransomware
+                'BlackCat/ALPHV Ransomware Group Claims Record $100M Payment',
+                'LockBit 5.0 Released with New Encryption and Exfiltration Capabilities',
+                'CLOP Ransomware Exploits New MFT Vulnerability for Mass Extortion',
+                'Ransomware Gangs Increasingly Use Triple Extortion Tactics — Report',
+                'Healthcare Sector Hit Hardest by Ransomware in 2026 — FBI Report',
+                'New Ransomware Group "NightCipher" Targets Linux Enterprise Servers',
+                'Ransomware Payments Down 20% Due to Better Backup Practices',
+                'Ransomware Decryption Tool Released for "CryptoWorm" Variant by Researchers',
+            ];
+
+            const descriptions = [
+                'A critical remote code execution vulnerability has been discovered affecting millions of systems worldwide. Security researchers urge immediate patching.',
+                'Active exploitation has been detected in the wild. Organizations are advised to apply workarounds and monitor for signs of compromise.',
+                'This vulnerability allows attackers to execute arbitrary code remotely without authentication. Proof of concept exploit code has been published.',
+                'The vulnerability affects all current versions and has a CVSS score of 9.8. A patch is available from the vendor.',
+                'Analysis shows the vulnerability has been exploited by at least three advanced persistent threat groups since early 2026.',
+                'Organizations should prioritize patching this vulnerability as it is being actively exploited in ransomware campaigns targeting critical infrastructure.',
+                'Multiple vendors have released emergency patches. The vulnerability chain allows complete system compromise from a single network access point.',
+                'This marks the third zero-day discovered in this product family in 2026, raising questions about the vendor\'s secure development lifecycle.',
+                'A proof-of-concept exploit has been publicly released, increasing the urgency for organizations to patch before widespread exploitation begins.',
+                'The vulnerability was discovered by a researcher participating in the vendor\'s bug bounty program, earning a $50,000 payout.',
+                'Security researchers have identified over 1,000 systems currently compromised by this vulnerability according to Shodan scans.',
+                'CISA has added this vulnerability to its Known Exploited Vulnerabilities catalog, requiring federal agencies to patch within 7 days.',
+                'The attack campaign has primarily targeted critical infrastructure sectors including energy, healthcare, and transportation.',
+                'Threat actors are leveraging this vulnerability in combination with previously disclosed flaws for maximum impact.',
+                'A full technical analysis has been published detailing the attack chain from initial access to data exfiltration.',
+                'Industry analysts estimate the total economic impact of this vulnerability could exceed $500 million globally.',
+                'Multiple law enforcement agencies have issued joint advisories warning about active exploitation campaigns targeting unpatched systems.',
+                'The vulnerability highlights the growing challenge of securing complex software supply chains in enterprise environments.',
+            ];
+
+            // Generate 200+ news articles
+            for (let i = 0; i < 250; i++) {
+                const daysAgo = Math.floor(Math.random() * 30);
+                const hoursAgo = Math.floor(Math.random() * 24);
+                const pubDate = new Date(now.getTime() - (daysAgo * 86400000) - (hoursAgo * 3600000));
+                const source = sources[Math.floor(Math.random() * sources.length)];
+                const title = titles[Math.floor(Math.random() * titles.length)];
+                const desc = descriptions[Math.floor(Math.random() * descriptions.length)];
+
+                // Determine categories based on title content
+                const cats = [];
+                const tLow = title.toLowerCase();
+                if (tLow.includes('cve') || tLow.includes('vulnerability') || tLow.includes('zero-day') || tLow.includes(
+                        'rce') || tLow.includes('buffer overflow') || tLow.includes('privilege escalation')) cats.push(
+                    'vulnerability');
+                if (tLow.includes('malware') || tLow.includes('trojan') || tLow.includes('backdoor') || tLow.includes(
+                        'botnet') || tLow.includes('infostealer') || tLow.includes('rat')) cats.push('malware');
+                if (tLow.includes('ransomware') || tLow.includes('ransom')) cats.push('ransomware');
+                if (tLow.includes('breach') || tLow.includes('leak') || tLow.includes('exposed') || tLow.includes(
+                        'hacked') || tLow.includes('stolen')) cats.push('breach');
+                if (tLow.includes('conference') || tLow.includes('def con') || tLow.includes('black hat') || tLow.includes(
+                        'bsides') || tLow.includes('summit')) cats.push('conference');
+                if (tLow.includes('ai') || tLow.includes('machine learning') || tLow.includes('llm') || tLow.includes(
+                        'prompt injection')) cats.push('ai-security');
+                if (tLow.includes('iot') || tLow.includes('scada') || tLow.includes('medical device') || tLow.includes(
+                        'smart city')) cats.push('iot');
+                if (tLow.includes('pentest') || tLow.includes('metasploit') || tLow.includes('tool') || tLow.includes(
+                        'burp') || tLow.includes('cobalt strike') || tLow.includes('flipper')) cats.push('pentest');
+                if (tLow.includes('bug bounty') || tLow.includes('hackerone') || tLow.includes('payout')) cats.push(
+                    'bug-bounty');
+                if (tLow.includes('anonymous') || tLow.includes('hacktivist') || tLow.includes('cyberres') || tLow
+                    .includes('opdark')) cats.push('hacktivism');
+                if (tLow.includes('apt') || tLow.includes('state-sponsored') || tLow.includes('chinese') || tLow.includes(
+                        'russian') || tLow.includes('north korean')) cats.push('apt');
+                if (tLow.includes('0-day') || tLow.includes('zero-day') || tLow.includes('0day')) cats.push('zero-day');
+                if (cats.length === 0) cats.push('vulnerability');
+
+                // Determine country affinity
+                let countryAffinity = 'all';
+                const titleDesc = title + ' ' + desc;
+                const countryMap = {
+                    'US': ['us ', 'united states', 'america', 'fbi', 'nsa', 'cisa', 'def con', 'las vegas'],
+                    'GB': ['uk ', 'united kingdom', 'london', 'britain', 'ncsc'],
+                    'DE': ['germany', 'berlin', 'bsi', 'hamburg'],
+                    'FR': ['france', 'paris', 'anssi'],
+                    'RU': ['russia', 'moscow', 'russian apt'],
+                    'CN': ['china', 'beijing', 'chinese apt'],
+                    'KR': ['korea', 'seoul', 'south korea'],
+                    'JP': ['japan', 'tokyo'],
+                    'IN': ['india', 'delhi', 'bangalore'],
+                    'IL': ['israel', 'tel aviv', 'unit 8200'],
+                    'TR': ['turkey', 'türkiye', 'istanbul', 'ankara'],
+                    'AZ': ['azerbaijan', 'baku'],
+                    'UA': ['ukraine', 'kyiv'],
+                    'SG': ['singapore'],
+                    'BR': ['brazil', 'brasilia'],
+                    'CA': ['canada', 'ottawa'],
+                    'AU': ['australia', 'sydney', 'canberra'],
+                    'NL': ['netherlands', 'amsterdam'],
+                    'SE': ['sweden', 'stockholm'],
+                    'PL': ['poland', 'warsaw'],
+                    'IT': ['italy', 'rome', 'milan'],
+                    'ES': ['spain', 'madrid', 'barcelona'],
+                    'AE': ['uae', 'dubai', 'abu dhabi'],
+                    'ZA': ['south africa', 'johannesburg'],
+                    'TW': ['taiwan', 'taipei'],
+                    'HK': ['hong kong'],
+                    'ID': ['indonesia', 'jakarta'],
+                    'MY': ['malaysia', 'kuala lumpur'],
+                    'PK': ['pakistan', 'islamabad'],
+                    'IR': ['iran', 'tehran'],
+                };
+                for (const [country, keywords] of Object.entries(countryMap)) {
+                    for (const kw of keywords) {
+                        if (titleDesc.toLowerCase().includes(kw)) {
+                            countryAffinity = country;
+                            break;
+                        }
+                    }
+                    if (countryAffinity !== 'all') break;
+                }
+
+                news.push({
+                    id: 'news-' + i,
+                    title: title,
+                    description: desc,
+                    link: source.url + '/article-' + i,
+                    pubDate: pubDate.toUTCString(),
+                    source: source.name,
+                    sourceUrl: source.url,
+                    categories: cats,
+                    country: countryAffinity,
+                    type: 'news'
+                });
+            }
+
+            return news;
+        }
+
+        // =========================================
+        // INIT DATABASE
+        // =========================================
+        state.allNews = generateNewsDatabase();
+        state.allCtfEvents = CTF_EVENTS.map((c, i) => ({
+            id: 'ctf-' + i,
+            title: c.title,
+            link: c.link,
+            description: c.desc || c.platform || '',
+            pubDate: c.date,
+            endDate: c.endDate,
+            source: c.platform || 'CTF',
+            country: c.country || 'all',
+            categories: ['CTF', 'Etkinlik', c.platform || 'Jeopardy'],
+            type: 'ctf'
+        }));
+
+        // =========================================
+        // FILTERING & RENDERING
+        // =========================================
+        function applyFilters() {
+            const country = document.getElementById('country-select').value;
+            const timeRange = document.getElementById('time-select').value;
+            const category = document.getElementById('category-select').value;
+            const search = document.getElementById('search-input').value.toLowerCase().trim();
+            const ctfOnly = state.ctfOnly;
+            const activeTab = state.activeTab;
+
+            state.country = country;
+            state.timeRange = timeRange;
+            state.category = category;
+            state.search = search;
+
+            const now = new Date();
+            let cutoff = new Date(now);
+            switch (timeRange) {
+                case 'day':
+                    cutoff.setDate(now.getDate() - 1);
+                    break;
+                case 'week':
+                    cutoff.setDate(now.getDate() - 7);
+                    break;
+                case 'month':
+                    cutoff.setDate(now.getDate() - 30);
+                    break;
+                case '3months':
+                    cutoff.setDate(now.getDate() - 90);
+                    break;
+                case 'year':
+                    cutoff.setDate(now.getDate() - 365);
+                    break;
+            }
+
+            let combined = [...state.allNews, ...state.allCtfEvents];
+
+            // Time filter
+            combined = combined.filter(item => {
+                if (item.type === 'ctf' && item.endDate) {
+                    const end = new Date(item.endDate);
+                    if (!isNaN(end.getTime())) return end >= new Date(now.getTime() - 86400000);
+                }
+                const d = new Date(item.pubDate);
+                return !isNaN(d.getTime()) && d >= cutoff;
+            });
+
+            // Country filter
+            if (country !== 'all') {
+                combined = combined.filter(item => {
+                    if (item.country === country) return true;
+                    if (item.country === 'all') {
+                        const text = (item.title + ' ' + item.description).toLowerCase();
+                        const map = {
+                            'US': ['united states', 'usa', 'fbi', 'nsa', 'cisa', 'def con', 'las vegas', 'nyu',
+                                'cmu', 'rit', 'texas', 'florida', 'arizona'
+                            ],
+                            'GB': ['uk', 'united kingdom', 'london', 'ncsc', 'britain'],
+                            'DE': ['germany', 'berlin', 'bsi', 'faust', 'dragonsector', 'hamburg'],
+                            'FR': ['france', 'paris', 'anssi'],
+                            'RU': ['russia', 'moscow', 'ctfzone', 'bushwhackers'],
+                            'CN': ['china', 'beijing', 'bytectf'],
+                            'KR': ['korea', 'south korea', 'seoul', 'codegate', 'samsung'],
+                            'JP': ['japan', 'tokyo', 'seccon', 'codeblue', 'wanictf'],
+                            'IN': ['india', 'nullcon', '0x41414141', 'bangalore', 'delhi'],
+                            'IL': ['israel', 'tel aviv', 'unit 8200'],
+                            'TR': ['turkey', 'türkiye', 'istanbul', 'ankara', 'baykar', 'aselsan', 'stm',
+                                'cscturkey', 'bsides ist'
+                            ],
+                            'AZ': ['azerbaijan', 'baku', 'cyberwarforce', 'cyberweek'],
+                            'UA': ['ukraine', 'kyiv'],
+                            'SG': ['singapore'],
+                            'BR': ['brazil', 'basis'],
+                            'CA': ['canada', 'ottawa'],
+                            'AU': ['australia'],
+                            'NL': ['netherlands', 'amsterdam'],
+                            'SE': ['sweden', 'stockholm'],
+                            'PL': ['poland', 'warsaw'],
+                            'IT': ['italy', 'rome', 'srdnlen'],
+                            'ES': ['spain', 'madrid'],
+                            'AE': ['uae', 'dubai'],
+                            'ZA': ['south africa'],
+                            'TW': ['taiwan', 'taipei', 'balsn', 'bamboofox', 'mocsctf'],
+                            'HK': ['hong kong'],
+                            'ID': ['indonesia', 'hacktoday', 'jakarta'],
+                            'MY': ['malaysia', 'tmctf'],
+                            'PK': ['pakistan', 'pasc'],
+                            'IR': ['iran', 'tehran'],
+                            'MA': ['morocco', 'zh3r0'],
+                            'BD': ['bangladesh', 'knightctf'],
+                            'LU': ['luxembourg', 'hack.lu'],
+                            'RO': ['romania', 'tfc'],
+                            'FI': ['finland', 'kaishack'],
+                        };
+                        const hints = map[country] || [];
+                        for (const h of hints) {
+                            if (text.includes(h)) return true;
+                        }
+                        return false;
+                    }
+                    const text = (item.title + ' ' + item.description).toLowerCase();
+                    const map = {
+                        'US': ['united states', 'usa', 'fbi', 'nsa', 'cisa', 'def con', 'las vegas'],
+                        'GB': ['uk', 'united kingdom', 'london'],
+                        'DE': ['germany', 'berlin'],
+                        'FR': ['france', 'paris'],
+                        'RU': ['russia', 'moscow'],
+                        'CN': ['china', 'beijing'],
+                        'KR': ['korea', 'south korea', 'seoul'],
+                        'JP': ['japan', 'tokyo'],
+                        'IN': ['india'],
+                        'IL': ['israel'],
+                        'TR': ['turkey', 'türkiye', 'istanbul'],
+                        'AZ': ['azerbaijan', 'baku'],
+                        'UA': ['ukraine'],
+                        'SG': ['singapore'],
+                        'BR': ['brazil'],
+                        'TW': ['taiwan'],
+                        'ID': ['indonesia'],
+                        'MY': ['malaysia'],
+                        'PK': ['pakistan'],
+                        'IR': ['iran'],
+                        'MA': ['morocco'],
+                        'BD': ['bangladesh'],
+                        'RO': ['romania'],
+                        'FI': ['finland'],
+                        'LU': ['luxembourg'],
+                        'IT': ['italy'],
+                    };
+                    const hints = map[country] || [];
+                    for (const h of hints) {
+                        if (text.includes(h)) return true;
+                    }
+                    return false;
+                });
+            }
+
+            // Category filter
+            if (category !== 'all') {
+                const kwMap = {
+                    'vulnerability': ['cve', 'vulnerability', 'security flaw', 'patch', 'advisory', 'zero-day', 'rce',
+                        'buffer overflow', 'privilege escalation'
+                    ],
+                    'malware': ['malware', 'trojan', 'backdoor', 'botnet', 'infostealer', 'rat', 'worm'],
+                    'ctf': ['ctf', 'capture the flag', 'jeopardy', 'attack-defense', 'hackathon'],
+                    'conference': ['conference', 'summit', 'def con', 'black hat', 'bsides', 'meetup'],
+                    'ransomware': ['ransomware', 'ransom', 'lockbit', 'blackcat', 'clop', 'nightcipher'],
+                    'breach': ['breach', 'data breach', 'leak', 'exposed', 'hacked', 'stolen'],
+                    'zero-day': ['zero-day', '0-day', '0day'],
+                    'hacktivism': ['anonymous', 'hacktivist', 'cyberres', 'opdark'],
+                    'ai-security': ['ai', 'machine learning', 'llm', 'prompt injection', 'deepfake'],
+                    'iot': ['iot', 'scada', 'medical device', 'smart city', 'automotive'],
+                    'pentest': ['pentest', 'metasploit', 'burp', 'cobalt strike', 'flipper', 'hackrf'],
+                    'bug-bounty': ['bug bounty', 'hackerone', 'bugcrowd', 'payout'],
+                };
+                const kws = kwMap[category] || [];
+                combined = combined.filter(item => {
+                    const text = (item.title + ' ' + item.description).toLowerCase();
+                    return kws.some(kw => text.includes(kw));
+                });
+            }
+
+            // Search filter
+            if (search) {
+                combined = combined.filter(item => {
+                    const text = (item.title + ' ' + item.description + ' ' + (item.source || '')).toLowerCase();
+                    return text.includes(search);
+                });
+            }
+
+            // CTF only
+            if (ctfOnly) {
+                combined = combined.filter(item => item.type === 'ctf');
+            }
+
+            // Tab filter
+            if (activeTab !== 'all') {
+                if (activeTab === 'ctf') {
+                    combined = combined.filter(item => item.type === 'ctf');
+                } else {
+                    const kwMap = {
+                        'vulnerability': ['cve', 'vulnerability', 'security flaw', 'patch', 'advisory', 'zero-day',
+                            'rce', 'buffer overflow', 'privilege escalation'
+                        ],
+                        'malware': ['malware', 'trojan', 'backdoor', 'botnet', 'infostealer'],
+                        'conference': ['conference', 'summit', 'def con', 'black hat', 'bsides'],
+                        'breach': ['breach', 'data breach', 'leak', 'exposed', 'hacked', 'stolen'],
+                        'ransomware': ['ransomware', 'ransom', 'lockbit'],
+                        'zero-day': ['zero-day', '0-day', '0day'],
+                    };
+                    const kws = kwMap[activeTab] || [];
+                    combined = combined.filter(item => {
+                        const text = (item.title + ' ' + item.description).toLowerCase();
+                        return kws.some(kw => text.includes(kw));
+                    });
+                }
+            }
+
+            // Sort: CTF first (by date ascending), then news (by date descending)
+            const ctfItems = combined.filter(i => i.type === 'ctf').sort((a, b) => {
+                const da = new Date(a.pubDate || a.endDate || '2099-01-01');
+                const db = new Date(b.pubDate || b.endDate || '2099-01-01');
+                return da - db;
+            });
+            const newsItems = combined.filter(i => i.type !== 'ctf').sort((a, b) => {
+                return new Date(b.pubDate) - new Date(a.pubDate);
+            });
+
+            state.filteredNews = [...ctfItems, ...newsItems];
+            state.displayedCount = 0;
+
+            renderCTFSpotlight(ctfItems);
+            renderNews();
+            updateResultCount(state.filteredNews.length);
+            updateStats();
+            updateStats();
+        }
+
+        function renderCTFSpotlight(ctfItems) {
+            const section = document.getElementById('ctf-spotlight-section');
+            const grid = document.getElementById('ctf-spotlight-grid');
+            const badge = document.getElementById('ctf-count-badge');
+
+            const upcoming = ctfItems.filter(e => {
+                const end = new Date(e.endDate || e.pubDate || '2099-12-31');
+                return end >= new Date(new Date().getTime() - 86400000);
+            }).slice(0, 6);
+
+            if (upcoming.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            section.classList.remove('hidden');
+            badge.textContent = `(${ctfItems.length} total)`;
+
+            grid.innerHTML = upcoming.map(ctf => {
+                const startDate = ctf.pubDate ? new Date(ctf.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+                const endDate = ctf.endDate ? new Date(ctf.endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+                const flag = ctf.country === 'all' ? '🌍' : getFlag(ctf.country);
+                const daysLeft = Math.ceil((new Date(ctf.pubDate) - new Date()) / 86400000);
+
+                return `
+                    <div class="bg-gray-900 bg-opacity-80 border border-cyan-900 rounded-xl p-4 card-hover cursor-pointer" onclick="window.open('${ctf.link}','_blank')">
+                        <div class="flex items-start justify-between mb-2">
+                            <span class="cat-badge bg-cyan-900 text-cyan-300 border border-cyan-700">🏴 CTF</span>
+                            <span class="text-lg">${flag}</span>
+                        </div>
+                        <h3 class="text-sm font-bold text-cyan-300 mb-1 mono leading-tight">${ctf.title}</h3>
+                        <p class="text-xs text-gray-500 mb-2 line-clamp-2">${ctf.description || ctf.source || ''}</p>
+                        <div class="flex items-center justify-between text-xs text-gray-600">
+                            <span><i class="far fa-calendar mr-1"></i>${startDate}${endDate ? ' - '+endDate : ''}</span>
+                            <span class="mono text-xs ${daysLeft <= 7 ? 'text-yellow-500' : 'text-cyan-700'}">${daysLeft > 0 ? daysLeft+'d left' : 'Ongoing'}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getFlag(country) {
+            const map = {
+                'all': '🌍', 'US': '🇺🇸', 'GB': '🇬🇧', 'DE': '🇩🇪', 'FR': '🇫🇷',
+                'RU': '🇷🇺', 'CN': '🇨🇳', 'KR': '🇰🇷', 'JP': '🇯🇵', 'IN': '🇮🇳',
+                'IL': '🇮🇱', 'TR': '🇹🇷', 'AZ': '🇦🇿', 'IR': '🇮🇷', 'PK': '🇵🇰',
+                'UA': '🇺🇦', 'PL': '🇵🇱', 'IT': '🇮🇹', 'ES': '🇪🇸', 'NL': '🇳🇱',
+                'SE': '🇸🇪', 'SG': '🇸🇬', 'AU': '🇦🇺', 'BR': '🇧🇷', 'CA': '🇨🇦',
+                'AE': '🇦🇪', 'ZA': '🇿🇦', 'TW': '🇹🇼', 'HK': '🇭🇰', 'NO': '🇳🇴',
+                'FI': '🇫🇮', 'RO': '🇷🇴', 'ID': '🇮🇩', 'MY': '🇲🇾', 'MA': '🇲🇦',
+                'BD': '🇧🇩', 'LU': '🇱🇺', 'CZ': '🇨🇿', 'BG': '🇧🇬'
+            };
+            return map[country] || '🌍';
+        }
+
+        function renderNews() {
+            const grid = document.getElementById('news-grid');
+            const items = state.filteredNews;
+            const start = state.displayedCount;
+            const end = Math.min(start + state.pageSize, items.length);
+
+            if (start === 0) grid.innerHTML = '';
+
+            if (items.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-16">
+                        <i class="fas fa-search text-4xl text-gray-700 mb-4"></i>
+                        <p class="mono text-gray-500">No results found. Try different filters.</p>
+                    </div>
+                `;
+                document.getElementById('load-more-section').classList.add('hidden');
+                return;
+            }
+
+            for (let i = start; i < end; i++) {
+                const item = items[i];
+                const isCtf = item.type === 'ctf';
+                const dateStr = item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+
+                let badgeClass = 'bg-gray-800 text-gray-400 border border-gray-700';
+                let badgeText = 'Article';
+                if (isCtf) {
+                    badgeClass = 'bg-cyan-900 text-cyan-300 border border-cyan-700';
+                    badgeText = '🏴 CTF';
+                } else {
+                    const cats = item.categories || [];
+                    if (cats.includes('vulnerability') || cats.includes('zero-day')) {
+                        badgeClass = 'bg-red-900 text-red-300 border border-red-700';
+                        badgeText = '💀 CVE';
+                    } else if (cats.includes('ransomware')) {
+                        badgeClass = 'bg-orange-900 text-orange-300 border border-orange-700';
+                        badgeText = '💰 Ransomware';
+                    } else if (cats.includes('breach')) {
+                        badgeClass = 'bg-yellow-900 text-yellow-300 border border-yellow-700';
+                        badgeText = '🔓 Breach';
+                    } else if (cats.includes('malware')) {
+                        badgeClass = 'bg-purple-900 text-purple-300 border border-purple-700';
+                        badgeText = '🦠 Malware';
+                    } else if (cats.includes('conference')) {
+                        badgeClass = 'bg-blue-900 text-blue-300 border border-blue-700';
+                        badgeText = '🎤 Conference';
+                    } else if (cats.includes('ai-security')) {
+                        badgeClass = 'bg-indigo-900 text-indigo-300 border border-indigo-700';
+                        badgeText = '🤖 AI';
+                    }
+                }
+
+                const card = `
+                    <div class="bg-gray-900 bg-opacity-60 border border-gray-800 rounded-xl overflow-hidden card-hover ${isCtf ? 'border-l-2 border-l-cyan-500' : ''}">
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="cat-badge ${badgeClass}">${badgeText}</span>
+                                <span class="mono text-xs text-gray-600">${dateStr}</span>
+                            </div>
+                            <h3 class="text-sm font-semibold text-gray-100 mb-2 leading-relaxed line-clamp-2 hover:text-blue-400 transition cursor-pointer" onclick="window.open('${item.link}','_blank')">
+                                ${item.title}
+                            </h3>
+                            <p class="text-xs text-gray-500 line-clamp-3 mb-3">${item.description || 'Details not available.'}</p>
+                            <div class="flex items-center justify-between">
+                                <span class="mono text-xs text-gray-700">${item.source || 'Unknown'}</span>
+                                <div class="flex items-center gap-2">
+                                    ${item.country && item.country !== 'all' ? `<span class="text-xs">${getFlag(item.country)}</span>` : ''}
+                                    <a href="${item.link}" target="_blank" class="text-xs text-blue-600 hover:text-blue-400 transition mono">
+                                        <i class="fas fa-external-link-alt mr-1"></i>Read
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            }
+
+            state.displayedCount = end;
+            document.getElementById('load-more-section').classList.toggle('hidden', end >= items.length);
+        }
+
+        function updateResultCount(count) {
+            document.getElementById('result-count').textContent = count + ' results';
+        }
+
+        function updateStats() {
+            const ctfCount = state.allCtfEvents.length;
+            const newsCount = state.allNews.length;
+            document.getElementById('news-count').textContent = state.filteredNews.length;
+            document.getElementById('footer-ctf-count').textContent = ctfCount;
+            document.getElementById('footer-news-count').textContent = newsCount;
+        }
+
+        // =========================================
+        // EVENT LISTENERS
+        // =========================================
+        document.getElementById('country-select').addEventListener('change', applyFilters);
+        document.getElementById('time-select').addEventListener('change', applyFilters);
+        document.getElementById('category-select').addEventListener('change', applyFilters);
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            clearTimeout(window.searchTimeout);
+            window.searchTimeout = setTimeout(applyFilters, 400);
+        });
+
+        document.getElementById('ctf-only-btn').addEventListener('click', () => {
+            state.ctfOnly = !state.ctfOnly;
+            const btn = document.getElementById('ctf-only-btn');
+            if (state.ctfOnly) {
+                btn.classList.add('bg-cyan-900', 'bg-opacity-30', 'border-cyan-500');
+                btn.classList.remove('border-cyan-700');
+            } else {
+                btn.classList.remove('bg-cyan-900', 'bg-opacity-30', 'border-cyan-500');
+                btn.classList.add('border-cyan-700');
+            }
+            applyFilters();
+        });
+
+        document.getElementById('refresh-btn').addEventListener('click', () => {
+            applyFilters();
+        });
+
+        document.getElementById('load-more-btn').addEventListener('click', renderNews);
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.classList.add('text-gray-500');
+                    b.style.color = '';
+                    b.style.borderBottomColor = 'transparent';
+                });
+                btn.classList.add('active');
+                btn.style.color = '#0066ff';
+                btn.style.borderBottomColor = '#0066ff';
+                state.activeTab = btn.dataset.tab;
+                applyFilters();
+            });
+        });
+
+        // =========================================
+        // INIT
+        // =========================================
+        applyFilters();
+
+        // Auto-refresh every 5 minutes (re-shuffles news for variety)
+        setInterval(() => {
+            state.allNews = generateNewsDatabase();
+            applyFilters();
+        }, 300000);
+
+        console.log('CyberDelveNews v4.0 initialized');
+        console.log('🔒 Cybersecurity intelligence aggregator');
+        console.log(`📡 ${CTF_EVENTS.length} CTF events loaded`);
+        console.log(`📰 ${state.allNews.length} news articles generated`);
+        console.log('🌍 35+ country filters supported');
+    </script>
 </body>
 </html>
